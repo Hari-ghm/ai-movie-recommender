@@ -16,6 +16,8 @@ import {
   ChevronRight
 } from "lucide-react";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000";
+
 interface Movie {
   id: number;
   title: string;
@@ -51,7 +53,7 @@ export default function Home() {
   useEffect(() => {
     const loadMovies = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/api/movies");
+        const response = await fetch(`${API_BASE_URL}/api/movies`);
         if (!response.ok) {
           throw new Error("Failed to load movie database");
         }
@@ -61,7 +63,7 @@ export default function Home() {
         setLoading(false);
       } catch (err: any) {
         console.error(err);
-        setError("Failed to connect to the movie recommendation engine. Please make sure the Python Flask backend is running on http://127.0.0.1:5000.");
+        setError(`Failed to connect to the movie recommendation engine. Please make sure the Python Flask backend is running on ${API_BASE_URL}.`);
         setLoading(false);
       }
     };
@@ -140,7 +142,7 @@ export default function Home() {
     setLoadingRecommendations(true);
     setRecommendedMovies([]);
     try {
-      const response = await fetch(`http://127.0.0.1:5000/api/recommend?id=${movie.id}`);
+      const response = await fetch(`${API_BASE_URL}/api/recommend?id=${movie.id}`);
       if (!response.ok) {
         throw new Error("Failed to compute recommendations");
       }
