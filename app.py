@@ -24,8 +24,8 @@ def load_and_build_model():
     movies_path = 'tmdb_5000_movies.csv'
     credits_path = 'tmdb_5000_credits.csv'
     
-    if not os.path.exists(movies_path) or not os.path.exists(credits_path):
-        raise FileNotFoundError(f"Missing required CSV files. Ensure {movies_path} and {credits_path} are in the workspace.")
+   # if not os.path.exists(movies_path) or not os.path.exists(credits_path):
+    #    raise FileNotFoundError(f"Missing required CSV files. Ensure {movies_path} and {credits_path} are in the workspace.")
 
     # 1. Load and merge datasets
     movies = pd.read_csv(movies_path)
