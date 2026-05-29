@@ -20,16 +20,21 @@ movies_map = {}      # Fast lookup for movie ID -> index
 def load_and_build_model():
     global movies_df, similarity_matrix, movies_catalog, movies_map
     
-    print("Loading and preparing movie dataset...")
-    movies_path = 'tmdb_5000_movies.csv'
-    credits_path = 'tmdb_5000_credits.csv'
-    
-   # if not os.path.exists(movies_path) or not os.path.exists(credits_path):
-    #    raise FileNotFoundError(f"Missing required CSV files. Ensure {movies_path} and {credits_path} are in the workspace.")
+    print("Loading dataset from Kaggle...")
 
-    # 1. Load and merge datasets
+    #loading datasets
+    movies_path = "tmdb_5000_movies.csv"
+    credits_path = "tmdb_5000_credits.csv"
+
+    if not os.path.exists(movies_path):
+        raise FileNotFoundError(f"Movies dataset not found at: {movies_path}")
+    if not os.path.exists(credits_path):
+        raise FileNotFoundError(f"Credits dataset not found at: {credits_path}")
+
     movies = pd.read_csv(movies_path)
     credits = pd.read_csv(credits_path)
+
+    print("Merging datasets...")
     movies = movies.merge(credits, on="title")
     
     # 2. Select key columns
