@@ -22,10 +22,15 @@ def load_and_build_model():
     
     print("Loading dataset from Kaggle...")
 
-    movies_url = os.getenv("MOVIE_URL")
-    credits_url = os.getenv("CREDIT_URL")
+    movies_url = "tmdb_5000_movies.csv"
+    credits_url = "tmdb_5000_credits.csv"
     
-    # 1. Load and merge datasets from Supabase URL APIs
+    if not os.path.exists(movies_url):
+        raise FileNotFoundError(f"Movies dataset not found at: {movies_url}")
+    if not os.path.exists(credits_url):
+        raise FileNotFoundError(f"Credits dataset not found at: {credits_url}")
+        
+    # 1. Load and merge datasets from Supabase URL APIs or local CSV files
     movies = pd.read_csv(movies_url)
     credits = pd.read_csv(credits_url)
     movies = movies.merge(credits, on="title")
