@@ -1,4 +1,3 @@
-import os
 import ast
 import pandas as pd
 import numpy as np
@@ -21,15 +20,12 @@ def load_and_build_model():
     global movies_df, similarity_matrix, movies_catalog, movies_map
     
     print("Loading and preparing movie dataset...")
-    movies_path = 'tmdb_5000_movies.csv'
-    credits_path = 'tmdb_5000_credits.csv'
+    movies_url = 'https://odpsjpmqbioydajrhjxh.supabase.co/storage/v1/object/sign/datasets/tmdb_5000_movies.csv?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mYThmNmMxMC0wNGQzLTQzNzAtYTU4OS1mZjcxOWY3OTJjZWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkYXRhc2V0cy90bWRiXzUwMDBfbW92aWVzLmNzdiIsImlhdCI6MTc4MDA0NzE4MSwiZXhwIjoxODExNTgzMTgxfQ.1W8WvtJzqyrKWZztkNV8YlC_l5IqRAv4Kub0HnQoVUY'
+    credits_url = 'https://odpsjpmqbioydajrhjxh.supabase.co/storage/v1/object/sign/datasets/tmdb_5000_credits.csv?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mYThmNmMxMC0wNGQzLTQzNzAtYTU4OS1mZjcxOWY3OTJjZWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkYXRhc2V0cy90bWRiXzUwMDBfY3JlZGl0cy5jc3YiLCJpYXQiOjE3ODAwNDcxOTIsImV4cCI6MTgxMTU4MzE5Mn0.5i084lkU6LWNvaSWbqbKp1BcIvgRqPu0fGRKleMCUTw'
     
-   # if not os.path.exists(movies_path) or not os.path.exists(credits_path):
-    #    raise FileNotFoundError(f"Missing required CSV files. Ensure {movies_path} and {credits_path} are in the workspace.")
-
-    # 1. Load and merge datasets
-    movies = pd.read_csv(movies_path)
-    credits = pd.read_csv(credits_path)
+    # 1. Load and merge datasets from Supabase URL APIs
+    movies = pd.read_csv(movies_url)
+    credits = pd.read_csv(credits_url)
     movies = movies.merge(credits, on="title")
     
     # 2. Select key columns
